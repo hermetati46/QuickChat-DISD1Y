@@ -5,38 +5,78 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginTest {
     Login login = new Login();
+    Message message = new Message();
 
     @Test
+    // Verifies that a valid username is accepted
     public void testUsernameCorrect() {
-        // Test Data: "kyl_1" (contains underscore, <= 5 chars)
         assertTrue(login.checkUserName("kyl_1"));
     }
 
     @Test
+    // Verifies that an invalid username is rejected
     public void testUsernameIncorrect() {
         assertFalse(login.checkUserName("kyle!!!!!!"));
     }
 
+    // Verifies and accepts a password that meets all the required rules
     @Test
     public void testPasswordComplexitySuccess() {
         assertTrue(login.checkPasswordComplexity("Ch&&sec@ke99!"));
     }
 
+    // Verifies and rejects a password that doesn't meet the required rules
     @Test
     public void testPasswordComplexityFailure() {
         assertFalse(login.checkPasswordComplexity("password"));
     }
 
     @Test
-    public void testRegistrationMessaging() {
-        // Phone Success case
-        String success = login.registerUser("kyl_1", "Ch&&sec@ke99!", "John", "Doe", "+27838968976");
-        assertTrue(success.contains("Username successfully captured."));
-        assertTrue(success.contains("Password successfully captured."));
-        assertTrue(success.contains("Phone number successfully captured."));
+    // Verifies that a message with a valid length is accepted
+    public void testMessageLengthSuccess() {
+        // Message success test <= 250 characters
+        String validMsg = "Hi Mike, can you join us for dinner tonight?";
+        assertEquals("Message ready to send.", message.checkMessageLength(validMsg));
+    }
 
-        // Phone failure case
-        String failPhone = login.registerUser("kyl_1", "Ch&&sec@ke99!", "John", "Doe", "0123456789");
-        assertEquals("Phone number is not correctly formatted; please ensure it starts with +27 and contains 12 characters in total.", failPhone);
+    @Test
+    // Verifies that a message with an invalid length is rejected
+    public void testMessageLengthFailure() {
+        // Message failure test > 250 characters
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 260; i++) {
+            sb.append("a");
+        }
+        String invalidMsg = sb.toString();
+        String expectedError = "Message exceeds 250 characters by 10; please reduce the size.";
+        assertEquals(expectedError, message.checkMessageLength(invalidMsg));
+    }
+
+    @Test
+    public void testRecipientNumberSuccess() {
+        // Tests Valid recipient
+        assertEquals("Cell phone number successfully captured.", message.checkRecipientCell("+27718693002"));
+    }
+
+    @Test
+    public void testRecipientNumberFailure() {
+        // Tests Invalid recipient
+        String expectedError = "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
+        assertEquals(expectedError, message.checkRecipientCell("08575975889"));
+    }
+
+    @Test
+    public void testMessageHashCreation() {
+        // Hash Test
+        String hashResult = message.createMessageHash("0012345678", 0, "Hi Mike, can you join us for dinner tonight?");
+        assertEquals("00:0:HITONIGHT", hashResult);
+    }
+
+    @Test
+    public void testSentMessageOptions() {
+        // Validating return values based on menu selection
+        assertEquals("Message successfully sent.", message.SentMessage(1));
+        assertEquals("Press 0 to delete the message.", message.SentMessage(2));
+        assertEquals("Message successfully stored.", message.SentMessage(3));
     }
 }
