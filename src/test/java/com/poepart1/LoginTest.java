@@ -32,6 +32,19 @@ public class LoginTest {
     }
 
     @Test
+    public void testRegistrationMessaging() {
+        // Successful registration case
+        String success = login.registerUser("kyl_1", "Ch&&sec@ke99!", "John", "Doe", "+27838968976");
+        assertTrue(success.contains("Username successfully captured."));
+        assertTrue(success.contains("Password successfully captured."));
+        assertTrue(success.contains("Phone number successfully captured."));
+
+        // Phone failure case
+        String failPhone = login.registerUser("kyl_1", "Ch&&sec@ke99!", "John", "Doe", "0123456789");
+        assertEquals("Phone number is not correctly formatted; please ensure it starts with +27 and contains 12 characters in total.", failPhone);
+    }
+
+    @Test
     // Verifies that a message with a valid length is accepted
     public void testMessageLengthSuccess() {
         // Message success test <= 250 characters
