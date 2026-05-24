@@ -14,6 +14,7 @@ public class Message {
         this.messageId = generateRandomMessageID();
     }
 
+    // Helper to generate 10-digit ID
     private String generateRandomMessageID() {
         Random rand = new Random();
         StringBuilder sb = new StringBuilder();
@@ -23,10 +24,12 @@ public class Message {
         return sb.toString();
     }
 
+    // Validate the message ID (no more than 10 characters)
     public boolean checkMessageID(String id) {
         return id != null && id.length() <= 10;
     }
 
+    // Reuses and validates the recipient's mobile phone number
     public String checkRecipientCell(String phone) {
         if (phone != null && phone.startsWith("+27") && phone.length() == 12 && phone.substring(1).matches("\\d+")) {
             return "Cell phone number successfully captured.";
@@ -35,6 +38,7 @@ public class Message {
         }
     }
 
+    // Creates the message hash according to the POE instructions
     public String createMessageHash(String id, int num, String msg) {
         if (id == null || id.length() < 2 || msg == null || msg.trim().isEmpty()) {
             return "00:" + num + ":ERROR";
@@ -51,6 +55,7 @@ public class Message {
         return this.messageHash;
     }
 
+    // Validates the text size (no more than 250 characters)
     public String checkMessageLength(String msg) {
         if (msg == null) {
             return "Please enter a message of less than 250 characters.";
@@ -63,6 +68,7 @@ public class Message {
         }
     }
 
+    // Returns the appropriate message status based on the user's choice
     public String SentMessage(int choice) {
         switch (choice) {
             case 1:
@@ -76,6 +82,7 @@ public class Message {
         }
     }
 
+    // Formats the message display data
     public String printMessages() {
         return "Message ID: " + this.messageId + "\n" +
                 "Message Hash: " + this.messageHash + "\n" +
@@ -83,6 +90,7 @@ public class Message {
                 "Message: " + this.messageContent;
     }
 
+    // It stores the messages details in Markdown format to a JSON file
     public boolean storeMessage(String id, String hash, String rep, String msg, int statusChoice) {
         try {
             String jsonFormat = "{\n" +

@@ -10,7 +10,7 @@ public class Main {
         ArrayList<Message> sentMessagesList = new ArrayList<>();
         int totalMessagesSent = 0;
 
-        System.out.println("Registration");
+        System.out.println("# Registration #");
         System.out.print("Enter First Name: ");
         String fName = input.nextLine();
         System.out.print("Enter Last Name: ");
@@ -25,9 +25,9 @@ public class Main {
         String regStatus = auth.registerUser(user, pass, fName, lName, phone);
         System.out.println(regStatus);
 
-        // Prossegue somente se o registro ocorreu corretamente
+        // Proceeds only if registration is successful
         if (regStatus.contains("successfully captured")) {
-            System.out.println("\nLogin");
+            System.out.println("\n# Login #");
             System.out.print("Enter Username: ");
             String loginUser = input.nextLine();
             System.out.print("Enter Password: ");
@@ -36,9 +36,9 @@ public class Main {
             boolean loginResult = auth.loginUser(loginUser, loginPass);
             System.out.println(auth.returnLoginStatus(loginResult));
 
-            // Usuário só interage se logado com sucesso
+            // The user can only interact if successfully logged in
             if (loginResult) {
-                System.out.println("\nWelcome to QuickChat.");
+                System.out.println("\n# Welcome to QuickChat #");
                 boolean running = true;
 
                 while (running) {
@@ -69,11 +69,11 @@ public class Main {
                             }
 
                             for (int i = 0; i < numMsgs; i++) {
-                                System.out.println("\n--- Entering Message " + (i + 1) + " of " + numMsgs + " ---");
+                                System.out.println("\n# Entering Message " + (i + 1) + " of " + numMsgs + " #");
                                 Message tempMsg = new Message();
                                 tempMsg.setNumMessagesSent(totalMessagesSent);
 
-                                // Entrada de Celular Destinatário
+                                // Here we enter the recipient's cell number for then send a message
                                 boolean cellValid = false;
                                 String destPhone = "";
                                 while (!cellValid) {
@@ -87,7 +87,7 @@ public class Main {
                                 }
                                 tempMsg.setRecipient(destPhone);
 
-                                // Entrada da Mensagem
+                                // Message input with length validation
                                 boolean msgValid = false;
                                 String textContent = "";
                                 while (!msgValid) {
@@ -101,13 +101,13 @@ public class Main {
                                 }
                                 tempMsg.setMessageContent(textContent);
 
-                                // Criação automática do ID e do Hash
+                                // Automatic ID and Hash Creation
                                 String id = tempMsg.getMessageId();
                                 System.out.println("Message ID generated: " + id);
                                 String hash = tempMsg.createMessageHash(id, totalMessagesSent, textContent);
                                 System.out.println("Message Hash: " + hash);
 
-                                // Decisão de Envio
+                                // The user decides what action the message will take
                                 System.out.println("\nChoose action for this message:");
                                 System.out.println("1) Send Message");
                                 System.out.println("2) Disregard Message");
@@ -123,16 +123,15 @@ public class Main {
                                 String statusMsg = tempMsg.SentMessage(actionChoice);
                                 System.out.println(statusMsg);
 
-                                // Salva via persistência JSON (Função pesquisada)
+                                // It stores the message details in the JSON file
                                 tempMsg.storeMessage(id, hash, destPhone, textContent, actionChoice);
 
                                 if (actionChoice == 1) {
                                     totalMessagesSent++;
                                     sentMessagesList.add(tempMsg);
-                                    System.out.println("\n--- Message Details ---");
+                                    System.out.println("\n# Message Details #");
                                     System.out.println(tempMsg.printMessages());
                                 } else if (actionChoice == 3) {
-                                    // Guardado mas não incrementado nos "enviados ativos" imediatamente, conforme interpretação de regras
                                     System.out.println("Message saved in store directory.");
                                 }
                             }
