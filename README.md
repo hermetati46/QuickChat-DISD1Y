@@ -9,7 +9,9 @@ PROG5121 - POE - Part 1 & Part 2
 
 Github Repository: https://github.com/hermetati46/QuickChat-DISD1Y/
 
-Youtube Link: https://youtu.be/MNGkKS8yMgw
+Youtube Link: 
+- Part 1: https://youtu.be/MNGkKS8yMgw
+- Part 2: https://youtu.be/l5rJtXoiwkQ
 
 # Overview
 
