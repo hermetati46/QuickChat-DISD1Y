@@ -118,7 +118,6 @@ public class LoginTest {
 
     @Test
     public void testSentMessagesArrayCorrectlyPopulated() {
-        // O sistema deve retornar as mensagens registradas como "Sent" (1 e 4)
         assertEquals(2, Message.sentMessages.size());
         assertEquals("Did you get the cake?", Message.sentMessages.get(0));
         assertEquals("It is dinner time !", Message.sentMessages.get(1));
