@@ -5,17 +5,20 @@ Student Number: ST10494935
 
 Course: Diploma in Software Development (DISD0601)
 
-PROG5121 - POE - Part 1 & Part 2
+PROG5121 - Part 1 - Part 2 - Part 3 - ( Porfolio of Evidence )
 
 Github Repository: https://github.com/hermetati46/QuickChat-DISD1Y/
 
 Youtube Link: 
 - Part 1: https://youtu.be/MNGkKS8yMgw
 - Part 2: https://youtu.be/l5rJtXoiwkQ
+- Part 3: https://youtu.be/0zW_oYN-jYE
 
-# Overview
+# Project Overview
 
 QuickChat is a console-based Java application developed as part of an academic Portfolio of Evidence (PoE). It implements a secure user authentication system (registration and login) alongside an interactive, validated message processing system. Users can compose, format, validate, hash, and persist message histories.
+
+This project was built in IntelliJ Platform using Java Maven.
 
 # Features
 
@@ -25,6 +28,14 @@ QuickChat is a console-based Java application developed as part of an academic P
 - Message Actions: Send, Discard, or Store a message
 - JSON Persistence of all message metadata to messages_store.json
 - Unit Tests covering all core validation logic
+- Parallel Memory Mapping - System information is distributed across independent parallel arrays
+- Stored Messages Submenu:
+    - Sender and Recipient Report - Lists the current authenticated account and respective recipients.
+    - Longest Message Search - Programmatically identifies and returns the message with the highest character count.
+    - ID Search - Returns matching destinatary and message text based on a precise ID search.
+    - Recipient Search - Lists all sent and stored messages targeted to a specific mobile number.
+    - Deletion by Hash - Searches and physically purges records across all parallel arrays using the message's unique hash.
+    - Stored Report - Compiles and formats a detailed state log for audit review.
 
 # Architecture
 The application is structured into three Java classes:
@@ -57,12 +68,16 @@ Is the class responsible for managing the entire lifecycle of a message, from cr
 - Message
   - Maximum 250 characters
   - Message ID must be no more than 10 digits (auto-generated)
+  - Custom Message Hash (auto-generated) 
 
 # Screenshots
 
 <img width="1920" height="1026" alt="Captura de tela 2026-05-24 223728" src="https://github.com/user-attachments/assets/b9520000-a4f2-45c7-bc01-f0fa2c833fa1" />
 
 <img width="1920" height="1026" alt="Captura de tela 2026-05-24 224013" src="https://github.com/user-attachments/assets/a2819802-21d8-4874-b8d1-d0f74d3cf88c" />
+
+<img width="1743" height="703" alt="image" src="https://github.com/user-attachments/assets/d554b962-f72b-41f8-a542-0351feec0c16" />
+
 
 # References
 
@@ -75,3 +90,7 @@ Oracle, 2024. The Java Tutorials: Lesson: Regular Expressions. [online] Availabl
 Siewierski, C., 2015. An Introduction to Scholarship: Building Academic Skills for Tertiary Study. Oxford University Press Southern Africa.
 
 W3Schools, 2026. Java User Input (Scanner). [online] Available at: <https://www.w3schools.com/java/java_user_input.asp> [Accessed 24 May 2026].
+
+Beck, K., 2002. Test-driven development: by example. Boston: Addison-Wesley.
+
+Hüther, G., 2006. The compassionate brain: How empathy creates intelligence. Boston: Trumpeter.
