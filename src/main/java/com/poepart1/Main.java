@@ -10,6 +10,9 @@ public class Main {
         ArrayList<Message> sentMessagesList = new ArrayList<>();
         int totalMessagesSent = 0;
 
+        // Reads pre-existing data from JSON messages if it exists
+        Message.readJSONFileToArray();
+
         System.out.println("# Registration #");
         System.out.print("Enter First Name: ");
         String fName = input.nextLine();
@@ -71,7 +74,7 @@ public class Main {
                             for (int i = 0; i < numMsgs; i++) {
                                 System.out.println("\n# Entering Message " + (i + 1) + " of " + numMsgs + " #");
                                 Message tempMsg = new Message();
-                                tempMsg.setNumMessagesSent(totalMessagesSent);
+                                tempMsg.setNumMessagesSent(Message.allMessagesList.size());
 
                                 // Here we enter the recipient's cell number for then send a message
                                 boolean cellValid = false;
@@ -104,7 +107,7 @@ public class Main {
                                 // Automatic ID and Hash Creation
                                 String id = tempMsg.getMessageId();
                                 System.out.println("Message ID generated: " + id);
-                                String hash = tempMsg.createMessageHash(id, totalMessagesSent, textContent);
+                                String hash = tempMsg.createMessageHash(id, Message.allMessagesList.size(), textContent);
                                 System.out.println("Message Hash: " + hash);
 
                                 // The user decides what action the message will take
@@ -117,23 +120,19 @@ public class Main {
                                 try {
                                     actionChoice = Integer.parseInt(input.nextLine());
                                 } catch (NumberFormatException e) {
-                                    actionChoice = 2; // Padrão descarta se inserido incorretamente
+                                    actionChoice = 2;
                                 }
 
                                 String statusMsg = tempMsg.SentMessage(actionChoice);
                                 System.out.println(statusMsg);
 
-                                // It stores the message details in the JSON file
-                                tempMsg.storeMessage(id, hash, destPhone, textContent, actionChoice);
+                                Message.populateArrays(tempMsg);
 
-                                if (actionChoice == 1) {
-                                    totalMessagesSent++;
-                                    sentMessagesList.add(tempMsg);
-                                    System.out.println("\n# Message Details #");
-                                    System.out.println(tempMsg.printMessages());
-                                } else if (actionChoice == 3) {
-                                    System.out.println("Message saved in store directory.");
-                                }
+                                // It stores the message details in the JSON file
+                                tempMsg.storeMessage(id, hash, destPhone, textContent, tempMsg.getStatus());
+
+                                System.out.println("\n# Message Details Saved #");
+                                System.out.println(tempMsg.printMessages());
                             }
                             break;
 
@@ -142,13 +141,55 @@ public class Main {
                             break;
 
                         case 3:
+                            // Submenu with the requirements for stored messages operations
+                            System.out.println("\n# Stored messages operations #");
+                            System.out.println("a) Display the sender and recipient of all stored messages");
+                            System.out.println("b) Display the longest stored message");
+                            System.out.println("c) Search for a message ID and display corresponding recipient and message");
+                            System.out.println("d) Search for all the messages stored for a particular recipient");
+                            System.out.println("e) Delete a message using the message hash");
+                            System.out.println("f) Display a report of all stored messages");
+                            System.out.print("Choose sub-option (a-f): ");
+                            String subChoice = input.nextLine().trim().toLowerCase();
+
+                            switch (subChoice) {
+                                case "a":
+                                    System.out.println(Message.getSenderRecipientReport(auth.getFirstName() + " " + auth.getLastName()));
+                                    break;
+                                case "b":
+                                    System.out.println("Longest Message Content: \"" + Message.getLongestStoredMessage() + "\"");
+                                    break;
+                                case "c":
+                                    System.out.print("Enter Message ID to Search: ");
+                                    String searchID = input.nextLine();
+                                    System.out.println("Result: " + Message.searchByID(searchID));
+                                    break;
+                                case "d":
+                                    System.out.print("Enter Recipient Cell Number to Search: ");
+                                    String searchRep = input.nextLine();
+                                    System.out.println("Result: " + Message.searchByRecipient(searchRep));
+                                    break;
+                                case "e":
+                                    System.out.print("Enter Message Hash to Delete: ");
+                                    String deleteHash = input.nextLine();
+                                    System.out.println(Message.deleteByHash(deleteHash));
+                                    break;
+                                case "f":
+                                    System.out.println(Message.getStoredMessagesReport());
+                                    break;
+                                default:
+                                    System.out.println("Invalid sub-option.");
+                            }
+                            break;
+
+                        case 4:
                             running = false;
-                            System.out.println("Total messages sent during this session: " + totalMessagesSent);
+                            System.out.println("Total messages stored/sent during this session: " + Message.allMessagesList.size());
                             System.out.println("Goodbye!");
                             break;
 
                         default:
-                            System.out.println("Invalid option. Please choose 1, 2, or 3.");
+                            System.out.println("Invalid option. Please choose 1, 2, 3, or 4.");
                     }
                 }
             }
