@@ -10,6 +10,15 @@ public class Login {
     private String lastName;
     private String phoneNumber;
 
+    // Getters
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
     public boolean checkUserName(String username) {
         return username.contains("_") && username.length() <= 5;
     }
