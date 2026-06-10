@@ -1,24 +1,16 @@
 {
-  "MessageID": "5896079474",
-  "MessageHash": "58:0:HIYOU",
+  "MessageID": "4493108097",
+  "MessageHash": "44:0:HIYOU",
+  "Recipient": "+27718693002",
+  "Message": "Hi How Are You?",
+  "Status": "Sent"
+}
+---
+{
+  "MessageID": "4338310573",
+  "MessageHash": "43:1:HIIT",
   "Recipient": "+27718693003",
-  "Message": "Hi how are you?",
-  "StatusChoice": 1
+  "Message": "Hi How Is It?",
+  "Status": "Stored"
 }
-,
-{
-  "MessageID": "0772795716",
-  "MessageHash": "07:0:GOODMORNING",
-  "Recipient": "+27718693045",
-  "Message": "Good Morning",
-  "StatusChoice": 1
-}
-,
-{
-  "MessageID": "7082644222",
-  "MessageHash": "70:1:GOODBYEGOODBYE",
-  "Recipient": "+27718693034",
-  "Message": "Goodbye",
-  "StatusChoice": 3
-}
-,
+---
